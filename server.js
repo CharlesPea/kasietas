@@ -6,13 +6,12 @@ const mysql = require('mysql2');
 const app = express();
 app.use(express.static('public'));
 
-// Enable CORS for all routes
+
 app.use(cors());
 
-// Middleware
+
 app.use(bodyParser.json());
 
-// MySQL Connection
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -28,7 +27,7 @@ db.connect((err) => {
     console.log('Connected to MySQL');
 });
 
-// Save message endpoint
+
 app.post('/saveMessage', (req, res) => {
     const { RFID, Hora, Fecha, Peso } = req.body;
 
@@ -42,7 +41,6 @@ app.post('/saveMessage', (req, res) => {
     });
 });
 
-// Retrieve messages endpoint
 app.get('/getMessages', (req, res) => {
     const query = 'SELECT * FROM messages';
     db.query(query, (err, results) => {
@@ -100,9 +98,6 @@ app.delete('/delete-entry/:id', (req, res) => {
 });
 
 
-  
-
-// Start the server
 const PORT = 3000;
 app.listen(PORT, "0.0.0.0",() => {
     console.log(`Server running on port ${PORT}`);
